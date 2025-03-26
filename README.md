@@ -6,7 +6,7 @@ Instead of manually writing `.github/workflows/*.yml` files, Dodo generates, val
 > [!IMPORTANT]
 > Dodo is in its early days, and I am actively working on v0.1.0. Some features may not work, and the docs may be outdated (or may not exist entirely). 
 
-## Why Dodo? (Planned)
+## Why Dodo? (Planned features)
 - Automatic workflow generation based on best practices.
 - Fetch and update actions from GitHub Actions Marketplace.
 - Adapts workflows based on language and repository setup.
