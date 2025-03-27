@@ -1,4 +1,4 @@
-# Dodo
+# Dodo 🦤
 
 Dodo is a CLI tool that automates the creation and optimization of GitHub Actions workflows.  
 Instead of manually writing `.github/workflows/*.yml` files, Dodo generates, validates, and updates them based on project structure and user configurations.
