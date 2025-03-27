@@ -8,7 +8,7 @@ Instead of manually writing `.github/workflows/*.yml` files, Dodo generates, val
 
 ## Why Dodo? (Planned features)
 - Automatic workflow generation based on best practices.
-- Fetch and update actions from [Dox](https://github.com/dodomatic/dox/).
+- Fetch and update actions from [raphus.io](https://github.com/dodomatic/raphus.io/).
 - Adapts workflows based on language and repository setup.
 - Fast and reliable, built in Rust.
 - Configurable via `dodo.toml`.
