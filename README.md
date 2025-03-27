@@ -4,11 +4,11 @@ Dodo is a CLI tool that automates the creation and optimization of GitHub Action
 Instead of manually writing `.github/workflows/*.yml` files, Dodo generates, validates, and updates them based on project structure and user configurations.
 
 > [!IMPORTANT]
-> Dodo is in its early days, and I am actively working on v0.1.0. Some features may not work, and the docs may be outdated (or may not exist entirely). 
+> Dodo is in its early days, and I am actively working on **v0.1.0**. Some features may not work, and the docs may be outdated. 
 
 ## Why Dodo? (Planned features)
 - Automatic workflow generation based on best practices.
-- Fetch and update actions from GitHub Actions Marketplace.
+- Fetch and update actions from [Dox](https://github.com/dodomatic/dox/).
 - Adapts workflows based on language and repository setup.
 - Fast and reliable, built in Rust.
 - Configurable via `dodo.toml`.
