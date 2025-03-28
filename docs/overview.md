@@ -1,10 +1,10 @@
 ---
 layout: page
-title: Dodomatic
-permalink: /dodomatic/
+title: Overview
+permalink: /overview/
 ---
 
-# Dodomatic's Architecture
+# Overview
 
 Dodomatic is an integrated suite of tools designed to streamline CI/CD workflow management for developers. The system is composed of several interlocking components that work together to automate the creation, validation, publishing, and maintenance of workflow templates. Here’s a high-level view of each component and how they interact:
 
@@ -14,10 +14,14 @@ Dodomatic is an integrated suite of tools designed to streamline CI/CD workflow 
 
 - **Key Commands:**  
   - **`dodo init`**: Scans the project directory (using tools like Trustfall) to detect language-specific configuration files (e.g., `Cargo.toml`, `pyproject.toml`, etc.) and automatically generates a default `dodo.toml` file.  
-  - **`dodo gen`**: Reads `dodo.toml`, fetches the appropriate base workflow template from the registry (raphus.io), substitutes placeholders based on project-specific settings, and creates the final workflow file at `.github/workflows/ci.yml`.  
-  - **`dodo add`**: Allows the integration of external workflow snippets (e.g., pre-commit hooks) either by fetching them from a dedicated source or via user-supplied URLs.  
-  - **`dodo update`**: Checks the current workflow file against the latest versions of actions (via GitHub API) and updates the workflow if newer versions are available.  
-  - **`dodo sync`**: Detects changes in project configuration (e.g., `clippy.toml` removed, `rustfmt.toml` added), updates `dodo.toml`, and regenerates workflows accordingly.
+  - **`dodo build`**: Reads `dodo.toml`, fetches the appropriate base workflow template from the registry (raphus.io), substitutes placeholders based on project-specific settings, and creates the final workflow file at `.github/workflows/ci.yml`. It also generates or updates `dodo.lock` to lock versions and ensure reproducibility.
+  - **`dodo add`**: Allows the integration of external workflow snippets (e.g., pre-commit hooks) to `dodo.toml` either by fetching them from a dedicated source or via user-supplied URLs.  
+  - **`dodo update`**: Checks the current workflow file against the latest versions of actions (via GitHub API) and updates `dodo.lock` if newer versions are available and explicitly requested.  
+  - **`dodo sync`**: Detects changes in project configuration (e.g., `clippy.toml` removed, `rustfmt.toml` added), updates `dodo.toml`, and regenerates workflows accordingly. It does **not** modify `dodo.lock` unless followed by `dodo build`.
+
+- **Configuration Files:**
+  - **`dodo.toml`**: Defines the desired workflow configuration, external snippets, and project-specific preferences.  
+  - **`dodo.lock`**: Stores resolved versions of actions, workflow templates, and dependencies to ensure consistency across CI/CD runs. Only modified by `dodo build` and `dodo update`. 
 
 ## 2. **raphus.io Registry**
 - **Purpose:**  
