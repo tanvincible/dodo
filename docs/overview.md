@@ -12,16 +12,7 @@ Dodomatic is an integrated suite of tools designed to streamline CI/CD workflow 
 - **Purpose:**  
   Dodo is the command-line interface that developers interact with. Its primary functions include initializing project configurations, generating CI/CD workflows, and managing updates.  
 
-- **Key Commands:**  
-  - **`dodo init`**: Scans the project directory (using tools like Trustfall) to detect language-specific configuration files (e.g., `Cargo.toml`, `pyproject.toml`, etc.) and automatically generates a default `dodo.toml` file.  
-  - **`dodo build`**: Reads `dodo.toml`, fetches the appropriate base workflow template from the registry (raphus.io), substitutes placeholders based on project-specific settings, and creates the final workflow file at `.github/workflows/ci.yml`. It also generates or updates `dodo.lock` to lock versions and ensure reproducibility.
-  - **`dodo add`**: Allows the integration of external workflow snippets (e.g., pre-commit hooks) to `dodo.toml` either by fetching them from a dedicated source or via user-supplied URLs.  
-  - **`dodo update`**: Checks the current workflow file against the latest versions of actions (via GitHub API) and updates `dodo.lock` if newer versions are available and explicitly requested.  
-  - **`dodo sync`**: Detects changes in project configuration (e.g., `clippy.toml` removed, `rustfmt.toml` added), updates `dodo.toml`, and regenerates workflows accordingly. It does **not** modify `dodo.lock` unless followed by `dodo build`.
-
-- **Configuration Files:**
-  - **`dodo.toml`**: Defines the desired workflow configuration, external snippets, and project-specific preferences.  
-  - **`dodo.lock`**: Stores resolved versions of actions, workflow templates, and dependencies to ensure consistency across CI/CD runs. Only modified by `dodo build` and `dodo update`. 
+- See [commands](commands.markdown) for key commands and configs. 
 
 ## 2. **raphus.io Registry**
 - **Purpose:**  
@@ -54,7 +45,7 @@ Dodomatic is an integrated suite of tools designed to streamline CI/CD workflow 
 - **Initialization:**  
   A developer starts by running `dodo init` in their project, which auto-generates a configuration file (`dodo.toml`) based on the detected project structure.
 - **Workflow Generation:**  
-  When `dodo gen` is executed, Dodo pulls the base workflow template from raphus.io, adapts it to the project-specific details (e.g., selecting the right test, lint, build, and deploy commands), and writes the final workflow to the repository.
+  When `dodo build` is executed, Dodo pulls the base workflow template from raphus.io, adapts it to the project-specific details (e.g., selecting the right test, lint, build, and deploy commands), and writes the final workflow to the repository.
 - **Continuous Updates:**  
   `dodo update` periodically checks for newer versions of the actions used within the workflow, ensuring that the CI/CD process stays current.
 - **External Contributions:**  

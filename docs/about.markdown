@@ -6,7 +6,7 @@ permalink: /about/
 
 # About Dodo
 
-Hi, I’m Tanvi—the creator behind Dodo.  
+Hi, I’m [Tanvi](https://github.com/tanvincible)—the creator behind Dodo.  
 I built Dodo out of my own frustration with the endless cycle of manually editing and debugging GitHub Actions workflows. I was tired of copy-pasting YAML files, only to have small mistakes derail my deployments. So, I decided to create a tool that would take care of all that for me.
 
 ## Why Dodo?
@@ -23,7 +23,7 @@ Dodo started as a personal project born out of necessity. While working on vario
 
 - **Automates Workflow Generation:** No more manual YAML tweaks.
 - **Ensures Reliability:** Validates configurations to catch errors before they cause issues.
-- **Customizes Workflows:** Uses a simple `dodo.toml` file to adapt to your project’s specific setup.
+- **Customizes Workflows:** Uses a simple `dodo.toml` and `dodo.lock` files to adapt to your project’s specific setup.
 
 ## Looking Ahead
 
@@ -34,4 +34,5 @@ I welcome your feedback, ideas, and contributions—let’s build something awes
 
 Dodo is released under the [MIT License](https://github.com/tanvincible/dodo/blob/main/LICENSE). All contributions are covered under the same license unless stated otherwise.
 
-Thanks for checking out Dodo. Here’s to smoother workflows and more time for coding!
+Thanks for checking out Dodo.  
+Here’s to smoother workflows and more time for coding!

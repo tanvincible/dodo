@@ -12,7 +12,7 @@ Dodo is an AI-powered CI/CD automation tool that intelligently parses a projectâ
 ## Project Parsing
 1. **Full Project Scan:**
    - Uses [Magika by Google](https://github.com/google/magika) to identify and classify files.
-   - Uses AI to determine whether a file is a configuration or an "interest" file (i.e., relevant to linting, testing, building, or deployment).
+   - Uses **Raphi** to determine whether a file is a configuration or an "interest" file (i.e., relevant to linting, testing, building, or deployment).
 
 2. **Parsing Configuration Files:**
    - Once files of interest are identified, Dodo uses **Lark** or another parsing tool to extract relevant tool configurations.
@@ -68,8 +68,8 @@ dodo add <external-ci>
   - Generates `.github/workflows/ci.yml`.
 
 ### **Updating vs. Upgrading**
-- `dodo update`: Updates dependency versions in `dodo.toml` and `dodo.lock`.
-- `dodo upgrade`: Updates dependency versions **and regenerates** `.github/workflows/*.yml`.
+- `dodo update`: Updates dependency versions in `dodo.toml`.
+- `dodo upgrade`: Updates dependency versions in `dodo.toml` and `dodo.lock` both.
 
 ---
 
