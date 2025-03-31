@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Config
+title: Configuration
 permalink: /config/
 ---
 
