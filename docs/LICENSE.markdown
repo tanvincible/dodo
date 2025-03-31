@@ -8,8 +8,8 @@ permalink: /license/
 
 **Dodo** is released under a **dual-license model**, allowing users and contributors to choose between the following licenses:
 
-- **[Apache License 2.0](../LICENSE-APACHE)** – A permissive license with an explicit grant of patent rights, providing legal protection for both users and contributors.
-- **[MIT License](../LICENSE-MIT)** – A highly permissive license that allows nearly unrestricted use, modification, and distribution of the codebase.
+- **[Apache License 2.0](https://github.com/tanvincible/dodo/blob/main/LICENSE-APACHE)** – A permissive license with an explicit grant of patent rights, providing legal protection for both users and contributors.
+- **[MIT License](https://github.com/tanvincible/dodo/blob/main/LICENSE-MIT)** – A highly permissive license that allows nearly unrestricted use, modification, and distribution of the codebase.
 
 Unless explicitly stated otherwise, all contributions to this repository are licensed under the terms of both licenses listed above.
 
