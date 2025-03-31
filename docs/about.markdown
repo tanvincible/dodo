@@ -11,6 +11,8 @@ I built Dodo out of my own frustration with the endless cycle of manually editin
 
 ## Why Dodo?
 
+_Make CI/CD workflows effortless!_
+
 I believe developers should spend their time building and innovating, not wrestling with configuration files.
 
 With Dodo, my goal is simple: automate the creation and optimization of CI/CD workflows so that you can focus on what really matters—writing great code.

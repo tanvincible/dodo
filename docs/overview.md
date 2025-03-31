@@ -6,7 +6,10 @@ permalink: /overview/
 
 # Overview
 
-Dodomatic is an integrated suite of tools designed to streamline CI/CD workflow management for developers. The system is composed of several interlocking components that work together to automate the creation, validation, publishing, and maintenance of workflow templates. Here’s a high-level view of each component and how they interact:
+Raphus Systems is an integrated suite of tools designed to streamline CI/CD workflow management for developers.  
+The system is composed of several interlocking components that work together to automate the creation, validation, publishing, and maintenance of workflow templates. 
+
+Here’s a high-level view of each component and how they interact:
 
 ## 1. **Dodo CLI Tool**  
 - **Purpose:**  

@@ -52,4 +52,4 @@ permalink: /commands/
 - **`dodo.lock`**  
   - Locks **resolved versions** of actions, workflow templates, and dependencies.  
   - Ensures **consistent CI/CD runs**.  
-  - Only modified by `dodo build`, `dodo update`, or `dodo upgrade`.  
+  - Only modified by `dodo build`, and `dodo upgrade`.  
