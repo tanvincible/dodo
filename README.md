@@ -19,5 +19,9 @@ Contributions, feedback, and ideas are welcome. See [contributing guidelines](CO
 
 ## License
 
-Dodo is open-source and licensed under the MIT License. Every contribution is considered to be under MIT unless stated otherwise.  
-See the [LICENSE](LICENSE) file for more details.
+**Dodo** is released under a **dual-license model**, allowing users and contributors to choose between the following licenses:
+
+- [Apache License 2.0](LICENSE-APACHE) – A permissive license with an explicit grant of patent rights, providing legal protection for both users and contributors.
+- [MIT License](LICENSE-MIT) – A highly permissive license that allows nearly unrestricted use, modification, and distribution of the codebase.
+
+Unless explicitly stated otherwise, all contributions to this repository are licensed under the terms of both licenses listed above.
