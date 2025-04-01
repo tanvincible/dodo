@@ -22,7 +22,7 @@ title: Dodo
 email: tanvipm19@gmail.com
 description: "Dodo generates and optimizes GitHub Actions workflows, so you can focus on coding."
 baseurl: "/dodo" # the subpath of your site, e.g. /blog
-url: "https://tanvincible.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://tanvincible.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: tanvipx
 github_username:  tanvincible
 

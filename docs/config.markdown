@@ -4,15 +4,14 @@ title: Configuration
 permalink: /config/
 ---
 
-# `dodo.toml` Configuration
+# `dodo.toml` Configuration  
 
 `dodo.toml` is the configuration file for Dodo. It allows you to fully customize your CI/CD workflows by defining build steps, linting, testing, deployment, and much more—all in a simple, human-readable format.
 
-> **Tip:** If `dodo.toml` is missing from your project root, Dodo will fall back to default settings.
+## **Default Configuration (`dodo init`)**  
 
-## **Default Configuration (`dodo init`)**
-
-Running `dodo init` creates a default `dodo.toml` file. Below is a simplified example that you can use as a starting point:
+Running `dodo init` creates a default `dodo.toml` file.  
+Below is a simplified example that you can use as a starting point:  
 
 ```toml
 # Example dodo.toml with placeholders
@@ -80,87 +79,85 @@ vulnerability_check = true
 enabled = true
 tools = ["docs_tool"]
 docs_tool = { version = "x.x.x", theme = "your-theme", output_dir = "docs/output" }
+
+[plugins]
+python = "https://github.com/dodo-lang/dodo-python"
+rust = "https://github.com/dodo-lang/dodo-rust"
 ```
 
 ---
 
-## **Sections Overview**
+## **Sections Overview**  
 
-### **1. `[project]`**
-Defines the overall project settings.
-- **`name`**: Name of the project.
-- **`language`**: Programming language (e.g., `rust`, `python`, `node`, `go`).
-- **`ci_provider`**: CI/CD provider. (Currently supports `github-actions`.)
+### **1. `[project]`**  
+Defines the overall project settings.  
+- **`name`**: Name of the project.  
+- **`language`**: Programming language (e.g., `rust`, `python`, `node`, `go`).  
+- **`ci_provider`**: CI/CD provider. (Currently supports `github-actions`.)  
 
-### **2. `[build]`**
-Specifies how to build your project.
-- **`enabled`**: Toggle build steps.
-- **`tools`**: List of build tools (e.g., cargo, go, setuptools).
-- Tool-specific configurations allow you to define versions, features, and arguments.
+### **2. `[build]`**  
+Specifies how to build your project.  
+- **`enabled`**: Toggle build steps.  
+- **`tools`**: List of build tools (e.g., cargo, go, setuptools).  
 
-### **3. `[lint]`**
-Configures static analysis tools.
-- **`enabled`**: Enable or disable linting.
-- **`tools`**: List of linters (e.g., clippy, ruff, golangci-lint) and their configurations.
+### **3. `[lint]`**  
+Configures static analysis tools.  
+- **`enabled`**: Enable or disable linting.  
+- **`tools`**: List of linters (e.g., clippy, ruff, golangci-lint).  
 
-### **4. `[test]`**
-Manages your testing frameworks.
-- **`enabled`**: Run tests if set to true.
-- **`tools`**: Specify testing tools (e.g., cargo-test, pytest, go-test) with additional arguments.
+### **4. `[test]`**  
+Manages your testing frameworks.  
+- **`enabled`**: Run tests if set to true.  
+- **`tools`**: Specify testing tools (e.g., cargo-test, pytest, go-test).  
 
-### **5. `[deploy]`**
-Handles deployment settings.
-- **`enabled`**: Enable or disable deployment.
-- **`tools`**: Deployment options such as Docker or GitHub Pages.
+### **5. `[deploy]`**  
+Handles deployment settings.  
+- **`enabled`**: Enable or disable deployment.  
+- **`tools`**: Deployment options such as Docker or GitHub Pages.  
 
-### **6. `[ci]`**
-Contains global CI/CD settings.
-- **`auto_update`**: Automatically update workflows.
-- **`workflow_file`**: Location of the generated workflow file.
-- **`branch_protection`**: Enforce branch protection rules.
+### **6. `[ci]`**  
+Contains global CI/CD settings.  
+- **`auto_update`**: Automatically update workflows.  
+- **`workflow_file`**: Location of the generated workflow file.  
+- **`branch_protection`**: Enforce branch protection rules.  
 
-### **7. `[custom_workflows]`**
-Define project-specific pre- and post-CI actions.
-- **`pre_ci`**: Commands to run before the CI process.
-- **`post_ci`**: Commands to run after the CI process.
+### **7. `[custom_workflows]`**  
+Define project-specific pre- and post-CI actions.  
+- **`pre_ci`**: Commands to run before the CI process.  
+- **`post_ci`**: Commands to run after the CI process.  
 
-### **8. `[env]`**
-Sets environment variables for your workflows.
-- Configure environment-specific variables to tailor the runtime behavior.
+### **8. `[env]`**  
+Sets environment variables for your workflows.  
 
-### **9. `[matrix]`**
-Supports matrix builds for testing across multiple versions.
-- Lists versions for languages like Rust, Python, and Go.
+### **9. `[matrix]`**  
+Supports matrix builds for testing across multiple versions.  
 
-### **10. `[cache]`**
-Defines caching strategies to speed up builds.
-- **`enabled`**: Toggle caching.
-- **`paths`**: Specify directories to cache.
+### **10. `[cache]`**  
+Defines caching strategies to speed up builds.  
 
-### **11. `[notifications]`**
-Configures notifications (e.g., Slack, Discord) for build status.
-- Enable notifications and set webhook URLs and channels.
+### **11. `[notifications]`**  
+Configures notifications (e.g., Slack, Discord) for build status.  
 
-### **12. `[hooks]`**
-Automates pre- and post-commit/merge actions.
-- **`pre_commit`**: Commands to execute before commits.
-- **`post_merge`**: Commands to run after merging code.
+### **12. `[hooks]`**  
+Automates pre- and post-commit/merge actions.  
 
-### **13. `[security]`**
-Implements security checks.
-- **`dependabot`**: Enable dependency scanning.
-- **`vulnerability_check`**: Run security audits.
+### **13. `[security]`**  
+Implements security checks.  
 
-### **14. `[docs]`**
-Generates project documentation.
-- **`enabled`**: Enable or disable docs generation.
-- **`tools`**: Choose from tools like mdbook and sphinx with their respective settings.
+### **14. `[docs]`**  
+Generates project documentation.  
+
+### **15. `[plugins]`**  
+Extends Dodo with custom configurations via plugins.  
+- **`python`**: Python-specific plugin for additional customization.  
+- **`rust`**: Rust-specific plugin for Rust projects.  
+- Extend with more languages and integrations as needed.  
 
 ---
 
-## **Example Use Cases**
+## **Example Use Cases**  
 
-### **1. Basic Rust Project**
+### **1. Basic Rust Project**  
 
 ```toml
 [project]
@@ -190,9 +187,12 @@ enabled = false
 auto_update = true
 workflow_file = ".github/workflows/ci.yml"
 branch_protection = true
+
+[plugins]
+rust = "https://github.com/dodomatic/dodo"
 ```
 
-### **2. Node.js Project with Custom Steps**
+### **2. Node.js Project with Custom Steps**  
 
 ```toml
 [project]
@@ -228,8 +228,10 @@ NODE_ENV = "production"
 [notifications]
 enabled = true
 slack = { webhook_url = "https://hooks.slack.com/services/...", channel = "#ci-updates" }
-```
 
+[plugins]
+python = "https://github.com/dodo-lang/dodo-python"
+```
 ---
 
 ## **How Dodo Uses `dodo.toml`**
