@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Internals
-permalink: /internals/
+title: Intern
+parent: Internals
 ---
 
 # Internal Working of Dodo

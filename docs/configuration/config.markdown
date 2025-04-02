@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Configuration
-permalink: /config/
+title: Configuration files
+parent: Configuration
 ---
 
 # `dodo.toml` Configuration  

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: raphus.io
-permalink: /raphus-docs/
+parent: Ecosystem
 ---
 
 # raphus.io

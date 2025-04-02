@@ -31,6 +31,24 @@ remote_theme: just-the-docs/just-the-docs
 plugins:
   - jekyll-feed
 
+collections:
+  getting-started:
+    output: true
+    permalink: "/:collection/:path/"
+  configuration:
+    output: true
+    permalink: "/:collection/:path/"
+  internals:
+    output: true
+    permalink: "/:collection/:path/"
+
+defaults:
+  - scope:
+      path: "docs"
+      type: "pages"
+    values:
+      layout: "default"
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to

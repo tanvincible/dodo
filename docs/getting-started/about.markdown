@@ -1,7 +1,7 @@
 ---
 layout: page
+parent: Getting Started
 title: About
-permalink: /about/
 ---
 
 # About Dodo

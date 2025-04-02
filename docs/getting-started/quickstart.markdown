@@ -1,5 +1,5 @@
 ---
 layout: page
 title: Quickstart
-permalink: /quickstart/
+parent: Getting Started
 ---

@@ -1,5 +1,5 @@
 ---
 layout: page
 title: Introduction
-permalink: /introduction/
+parent: Getting Started
 ---

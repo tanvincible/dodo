@@ -1,10 +1,10 @@
 ---
 layout: page
-title: LICENSE
+title: Licenses
 permalink: /license/
 ---
 
-# License
+# Licenses
 
 **Dodo** is released under a **dual-license model**, allowing users and contributors to choose between the following licenses:
 

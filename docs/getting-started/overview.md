@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Overview
-permalink: /overview/
+parent: Getting Started
 ---
 
 # Overview

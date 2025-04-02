@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Commands
-permalink: /commands/
+parent: Configuration
 ---
 
 # Dodo Commands
