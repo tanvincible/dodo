@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Intern
+title: How Dodo Works?
 parent: Internals
 ---
 
