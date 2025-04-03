@@ -11,14 +11,13 @@
 # Configuration  
 - [Command Reference](configuration/commands.markdown)  
 - [Configuration Options](configuration/config.markdown)  
-- [Rules & Best Practices](configuration/rules.markdown)  
 
 # Ecosystem  
 - [Raphus: Templates & Plugins](ecosystem/raphus.markdown)  
 
 # Internals  
 - [AI Integration](internals/ai.markdown)  
-- [How Dodo Works](internals/how-dodo-works.markdown)  
+- [How Dodo Works?](internals/how-dodo-works.markdown)  
 
 # Additional Resources  
 - [Troubleshooting](troubleshooting.markdown)  

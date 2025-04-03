@@ -14,7 +14,7 @@ ci_provider = "github-actions"
 
 [ci]
 auto_update = true
-workflow_file = ".github/workflow.yml"
+workflow_file = ".github/workflows/ci.yml"
 branch_protection = true
 
 [build]
@@ -67,8 +67,8 @@ tools = ["docs_tool"]
 docs_tool = { version = "x.x.x", theme = "your-theme", output_dir = "docs/output" }
 
 [plugins]
-python = "https://github.com/dodo-lang/dodo-python"
-rust = "https://github.com/dodo-lang/dodo-rust"
+python = "https://github.com/kurajo/dodo-python"
+rust = "https://github.com/kurajo/dodo-rust"
 ```
 
 ---
@@ -164,7 +164,7 @@ workflow_file = ".github/workflows/ci.yml"
 branch_protection = true
 
 [plugins]
-rust = "https://github.com/dodomatic/dodo"
+rust = "https://github.com/kurajo/dodo"
 ```
 
 ### Node.js Project
@@ -206,16 +206,16 @@ tools = ["slack"]
 slack = { webhook_url = "https://hooks.slack.com/services/...", channel = "#ci-updates" }
 
 [plugins]
-python = "https://github.com/dodo-lang/dodo-python"
+python = "https://github.com/kurajo/dodo-python"
 ```
 
 ---
 
 ## How Dodo Uses `dodo.toml`
 
-1. **Parsing**: Reads `dodo.toml` from the project root.
-2. **Workflow Generation**: Creates `.github/workflows/dodo.yml` based on your settings.
-3. **Automation**: Reduces manual YAML editing and ensures consistency.
+1. Parsing: Reads `dodo.toml` from the project root.
+2. Workflow Generation: Creates `.github/workflows/ci.yml` based on your settings.
+3. Automation: Reduces manual YAML editing and ensures consistency.
 
 ---
 
