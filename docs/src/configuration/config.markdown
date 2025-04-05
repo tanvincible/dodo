@@ -69,6 +69,10 @@ docs_tool = { version = "x.x.x", theme = "your-theme", output_dir = "docs/output
 [plugins]
 python = "https://github.com/kurajo/dodo-python"
 rust = "https://github.com/kurajo/dodo-rust"
+
+[ai]
+enabled = true
+model = "phi-3-mini-128k"
 ```
 
 ---

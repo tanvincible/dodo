@@ -3,6 +3,22 @@ name = "dodo"
 version = "0.1.0"
 edition = "2024"
 
+[workspace]
+members = [
+    "dodo-ai",
+    "dodo-classifier",
+    "dodo-filetype",
+    "dodo-parsers",
+    "dodo-cache",
+    "dodo-cli"
+]
+
 [dependencies]
 serde = "1.0.219"
 toml = "0.8.20"
+dodo-ai = { path = "./dodo-ai" }
+dodo-classifier = { path = "./dodo-classifier" }
+dodo-filetype = { path = "./dodo-filetype" }
+dodo-parsers = { path = "./dodo-parsers" }
+dodo-cache = { path = "./dodo-cache" }
+dodo-cli = { path = "./dodo-cli" }
