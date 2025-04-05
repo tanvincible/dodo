@@ -1,13 +1,13 @@
 # raphus.io
 
-raphus.io is the official CI/CD workflow registry for Dodo. It centralizes predefined GitHub Actions workflows so that Dodo can generate and manage CI/CD pipelines in a consistent, reliable, and scalable manner.
+**raphus.io** is the official CI/CD workflow registry for Dodo. It provides a structured repository of standardized GitHub Actions workflow templates and plugins that enable Dodo to generate and manage CI/CD pipelines reliably, consistently, and locally — without relying on cloud AI.
 
-This documentation covers the architecture, integration process, usage scenarios, and contribution guidelines for raphus.io.
+This documentation covers the current architecture, integration flow with Dodo, usage recommendations, and contribution guidelines.
 
 ## Table of Contents
 
 - [Overview](#overview)
-- [Architecture & Workflow Lifecycle](#architecture--workflow-lifecycle)
+- [Architecture](#architecture)
 - [Integration with Dodo](#integration-with-dodo)
 - [Usage Guidelines](#usage-guidelines)
 - [Frequently Asked Questions](#frequently-asked-questions)
@@ -15,118 +15,169 @@ This documentation covers the architecture, integration process, usage scenarios
 - [Contributing](#contributing)
 - [License & Support](#license--support)
 
+---
+
 ## Overview
 
-raphus.io acts as a registry that hosts community-driven CI/CD workflow templates for various programming languages and frameworks. Its primary goals are to:
+**raphus.io** is a versioned, community-driven registry of workflow templates and plugins that power Dodo's local generation and management of GitHub Actions pipelines. Inspired by platforms like `crates.io`, it aims to be the definitive source for scalable, high-quality, and reproducible workflows.
 
-- **Standardize Workflows:** Offer a centralized, versioned collection of tested GitHub Actions workflows.
-- **Automate Integration:** Enable Dodo to dynamically adjust workflow templates based on a user’s project configuration.
-- **Encourage Collaboration:** Allow the community to contribute new workflows and improvements, similar to how crates.io fosters the sharing of Rust libraries.
+### Key Features
 
-## Architecture & Workflow Lifecycle
-
-### 1. Template Repository
-
-- **Centralized Storage:** raphus.io hosts a collection of workflow templates organized by language and framework.
-- **Versioning:** Each template is versioned to ensure reproducibility and stability. Users can select specific versions to match their project needs.
-- **Index File:** A mapping file (e.g., `template.json`) acts as the index for all available templates. It maps a project’s language and configuration to the appropriate workflow template.
-
-### 2. Workflow Generation Process
-
-1. **Initialization:**
-   - When a user runs `dodo init`, Dodo reads the project's `dodo.toml` configuration.
-   - The language and other settings are used to determine the appropriate workflow template.
-
-2. **Template Fetching:**
-   - Dodo queries raphus.io (via the mapping file) to fetch the corresponding template.
-   - The registry supports multiple languages and frameworks, ensuring that the right template is retrieved for each project type.
-
-3. **Dynamic Adjustment:**
-   - The fetched template contains placeholders for various settings (e.g., build tools, testing commands).
-   - Dodo replaces these placeholders with values defined in the user’s `dodo.toml`, tailoring the workflow to the specific project.
-
-4. **Workflow Generation:**
-   - The adjusted workflow is saved as `.github/workflows/ci.yml` in the user’s repository.
-   - This generated file becomes the active CI/CD configuration for the project.
-
-### 3. Continuous Updates
-
-- **Auto-Update:** With auto-update enabled (as configured in `dodo.toml`), Dodo can check for newer versions of templates on raphus.io.
-- **Branch Protection:** The generated workflows can include branch protection settings to ensure safe deployments and testing.
-
-## Integration with Dodo
-
-### How Dodo Uses raphus.io
-
-- **Mapping via `template.json`:** Dodo uses a JSON-based mapping file from raphus.io that correlates programming languages and project configurations with available workflow templates.
-- **Customization:** After fetching a template, Dodo dynamically modifies it based on the user's `dodo.toml` settings. This includes updating environment variables, tool versions, and custom commands.
-- **Deployment:** The final, customized workflow is automatically placed in the repository under `.github/workflows/ci.yml`.
-
-### When to Use raphus.io
-
-- **New Projects:** Start with a default workflow by running `dodo init`, which immediately fetches a suitable template from raphus.io.
-- **Upgrading Pipelines:** As new templates or improvements are added to raphus.io, projects can update their CI/CD pipelines without rewriting workflow files from scratch.
-- **Multi-Language Projects:** Benefit from a unified, centralized registry that supports various languages and frameworks.
-
-## Usage Guidelines
-
-### Setting Up
-
-1. **Initialize Your Project:**
-   - Run `dodo init` to create a default `dodo.toml` file. Adjust the configuration as needed.
-
-2. **Customize Your Configuration:**
-   - Edit `dodo.toml` to specify build tools, linting, testing, and deployment options.
-   - The configuration parameters are used to dynamically adjust the workflow template fetched from raphus.io.
-
-3. **Commit & Deploy:**
-   - Once your configuration is set, commit the generated `.github/workflows/ci.yml` to trigger the CI/CD process.
-
-### Best Practices
-
-- **Keep Configurations Updated:** Regularly review and update your `dodo.toml` to take advantage of improvements in workflow templates.
-- **Leverage Auto-Update:** Enable auto-update to always use the latest approved templates from raphus.io.
-- **Version Control:** Use versioned templates to ensure reproducibility across different project stages.
-
-
-## Frequently Asked Questions
-
-### Q: What happens if my project’s language is not supported?
-
-A: If no matching template is found for your language, Dodo will notify you with a prompt. You can then either add a custom template or contribute a new workflow to raphus.io.
-
-### Q: Can I customize the fetched templates further?
-
-A: Yes, after the template is fetched, Dodo replaces placeholders based on your `dodo.toml`. You can also extend your configuration with additional custom commands in the `[custom_workflows]` section.
-
-### Q: How do version updates work?
-
-A: Dodo checks the version of the template against the one specified (or defaulted) in your configuration. When a new version is available on raphus.io, Dodo can update the workflow automatically if auto-update is enabled.
-
-## Troubleshooting
-
-- **Workflow Fails to Generate:**  
-  Check that your `dodo.toml` is correctly configured and that the mapping in `template.json` includes your project’s language.
-
-- **Template Mismatch:**  
-  Ensure that the version of the template being fetched is compatible with your configuration settings. Refer to the version history on raphus.io for details.
-
-- **Connection Issues:**  
-  If Dodo cannot reach raphus.io, verify your network settings and check for any service outages on the raphus.io status page.
-
-## Contributing
-
-Contributions are vital for making raphus.io a robust resource. To contribute:
-
-- **Review Guidelines:** See our [CONTRIBUTING.md](../CONTRIBUTING.md) for details on coding standards and template quality.
-- **Submit Pull Requests:** Propose new templates or improvements to existing ones.
-- **Community Engagement:** Join our discussion forums and GitHub issues to collaborate with other contributors.
-
-## License & Support
-
-raphus.io is released under the [MIT License](../LICENSE).  
-For support, report issues on our [GitHub Issues page](https://github.com/dodomatic/raphus.io/).
+- **Registry for Templates & Plugins:** Hosts reusable, customizable workflow templates and plugins.
+- **Local AI Parsing:** Leverages **Phi-3 Mini 128K**, running locally, to extract context-aware details from project environments.
+- **Template System:** Maps languages and frameworks to predefined workflows using the [raphus.io-index](https://github.com/dodomatic/raphus.io-index).
+- **Plugin System:** Enables logic extension (e.g., environment setup, secrets handling) in a modular, reusable way.
+- **No Cloud Dependency:** All processing is performed locally; no external AI or cloud inference APIs are involved.
 
 ---
 
-Happy automating your CI/CD workflows with raphus.io and Dodo!
+## Architecture
+
+### 1. Template System
+
+- Templates are structured YAML files with placeholders (`{{ }}`) for project-specific substitutions.
+- Templates are indexed using the `raphus.io-index` repository.
+- Each template:
+  - Supports **semantic versioning**
+  - Includes metadata such as supported languages, frameworks, and toolchains
+  - Can declare **optional plugin hooks** for pre-/post-generation logic
+
+### 2. Plugin System
+
+- Plugins are executable logic components (e.g., environment validators, version matchers, secret injectors).
+- Hosted in the same registry as templates.
+- Can be:
+  - **Native (Rust) binaries**
+  - **Scripts** or **WASM modules**
+- Executed **locally** as part of Dodo’s `build` pipeline.
+
+### 3. Local AI Integration
+
+- Phi-3 Mini 128K is used to:
+  - Extract metadata from source files (e.g., detect build systems, testing tools, or frameworks)
+  - Assist in template selection and plugin orchestration
+- All inference is performed **locally** with no cloud access.
+
+---
+
+## Integration with Dodo
+
+### How raphus.io Fits into Dodo’s Workflow
+
+1. **Initialization (`dodo init`)**
+   - Dodo scans the project environment.
+   - Phi-3 Mini 128K extracts relevant information.
+   - Dodo fetches a suitable template and plugin set from `raphus.io` using `raphus.io-index`.
+
+2. **Configuration (`dodo.toml`)**
+   - The user configures build, lint, test, and deploy steps.
+   - This config customizes template rendering.
+
+3. **Build (`dodo build`)**
+   - Templates are rendered locally using the settings in `dodo.toml`.
+   - Plugins are executed if needed to adjust or verify behavior.
+   - Final CI/CD workflow is saved in `.github/workflows/ci.yml`.
+
+4. **(Optional) Auto-Update**
+   - Users can enable workflow and plugin version auto-updates using `dodo.toml`.
+
+---
+
+## Usage Guidelines
+
+### Getting Started
+
+1. **Run Initialization**
+   ```bash
+   dodo init
+   ```
+   This creates a `dodo.toml` file and fetches a recommended template from `raphus.io`.
+
+2. **Configure Your Project**
+   - Edit `dodo.toml` to define:
+     - Build tools
+     - Lint/test commands
+     - Deployment configuration
+     - Plugin preferences
+
+3. **Generate Your Workflow**
+   ```bash
+   dodo build
+   ```
+   This generates `.github/workflows/ci.yml` using templates and plugins from raphus.io.
+
+4. **Commit & Push**
+   - Commit your `.github/workflows/` directory to your VCS.
+   - Your CI/CD pipeline is now live.
+
+---
+
+## Frequently Asked Questions
+
+### Q: Is raphus.io cloud-based?
+
+**No.** All processing is done **locally**. Phi-3 Mini 128K is bundled with Dodo and used for inference on your machine.
+
+### Q: How are templates selected?
+
+Templates are chosen using:
+- Language/framework mappings from `raphus.io-index`
+- Metadata extracted by Phi-3 from your codebase
+- Overrides or hints in `dodo.toml`
+
+### Q: Can I override templates or plugins?
+
+Yes. You can:
+- Provide a local template path in `dodo.toml`
+- Override plugin behavior by specifying local versions
+- Disable plugins with `plugins.disabled = [...]`
+
+### Q: Will raphus.io become decentralized or blockchain-based?
+
+Not in the MVP. Decentralization may be explored later if scaling demands it.
+
+---
+
+## Troubleshooting
+
+| Problem                     | Solution                                                                 |
+|----------------------------|--------------------------------------------------------------------------|
+| No workflow generated      | Check for errors in `dodo.toml`. Verify your project type is supported. |
+| Network issues             | raphus.io is only used for downloading templates/plugins — retry later. |
+| Template does not apply    | Try updating Dodo or specifying a fallback template in `dodo.toml`.      |
+| Plugin fails to run        | Ensure local plugin dependencies are met (e.g., `wasmtime` if using WASM).|
+
+---
+
+## Contributing
+
+We welcome contributions to raphus.io!
+
+1. **Fork** the repository
+2. **Add your template/plugin**
+   - Follow template guidelines in `TEMPLATE_GUIDELINES.md`
+   - Follow plugin interface in `PLUGIN_GUIDELINES.md`
+3. **Submit a Pull Request**
+   - Include metadata (version, language tags, etc.)
+   - Add a test project if possible
+
+---
+
+## License & Support
+
+**raphus.io** is licensed under the [Elastic License 2.0 (ELv2)](https://www.elastic.co/licensing/elastic-license).
+
+You **may**:
+- Use, modify, and distribute the source freely for personal or internal use
+
+You **may not**:
+- Host raphus.io as a service or provide managed access to it
+- Remove or obscure copyright
+- Circumvent license enforcement, if any
+
+For more details, read the full [Elastic License 2.0](https://www.elastic.co/licensing/elastic-license).
+
+---
+
+Happy building! 🚀  
+Questions or feedback? Join our GitHub Discussions or file an issue.
