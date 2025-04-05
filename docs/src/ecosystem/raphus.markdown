@@ -110,45 +110,6 @@ This documentation covers the current architecture, integration flow with Dodo, 
    - Commit your `.github/workflows/` directory to your VCS.
    - Your CI/CD pipeline is now live.
 
----
-
-## Frequently Asked Questions
-
-### Q: Is raphus.io cloud-based?
-
-**No.** All processing is done **locally**. Phi-3 Mini 128K is bundled with Dodo and used for inference on your machine.
-
-### Q: How are templates selected?
-
-Templates are chosen using:
-- Language/framework mappings from `raphus.io-index`
-- Metadata extracted by Phi-3 from your codebase
-- Overrides or hints in `dodo.toml`
-
-### Q: Can I override templates or plugins?
-
-Yes. You can:
-- Provide a local template path in `dodo.toml`
-- Override plugin behavior by specifying local versions
-- Disable plugins with `plugins.disabled = [...]`
-
-### Q: Will raphus.io become decentralized or blockchain-based?
-
-Not in the MVP. Decentralization may be explored later if scaling demands it.
-
----
-
-## Troubleshooting
-
-| Problem                     | Solution                                                                 |
-|----------------------------|--------------------------------------------------------------------------|
-| No workflow generated      | Check for errors in `dodo.toml`. Verify your project type is supported. |
-| Network issues             | raphus.io is only used for downloading templates/plugins — retry later. |
-| Template does not apply    | Try updating Dodo or specifying a fallback template in `dodo.toml`.      |
-| Plugin fails to run        | Ensure local plugin dependencies are met (e.g., `wasmtime` if using WASM).|
-
----
-
 ## Contributing
 
 We welcome contributions to raphus.io!
