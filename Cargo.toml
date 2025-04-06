@@ -10,8 +10,8 @@ members = [
     "crates/dodo-filetype",
     "crates/dodo-parsers",
     "crates/dodo-cache",
-    "crates/dodo-cli"
-]
+    "crates/dodo-cli",
+    "crates/dodo-core"]
 
 [dependencies]
 serde = "1.0.219"
@@ -22,3 +22,4 @@ dodo-filetype = { path = "crates/dodo-filetype" }
 dodo-parsers = { path = "crates/dodo-parsers" }
 dodo-cache = { path = "crates/dodo-cache" }
 dodo-cli = { path = "crates/dodo-cli" }
+dodo-core = { path = "crates/dodo-core" }
