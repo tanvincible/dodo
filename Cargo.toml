@@ -1,25 +1,35 @@
-[package]
-name = "dodo"
-version = "0.1.0"
-edition = "2024"
-
 [workspace]
+resolver = "3"
 members = [
     "crates/dodo-ai",
     "crates/dodo-classifier",
     "crates/dodo-filetype",
     "crates/dodo-parsers",
     "crates/dodo-cache",
-    "crates/dodo-cli",
-    "crates/dodo-core"]
+    "crates/dodo-core",
+    "crates/dodo-cli"
+]
 
-[dependencies]
-serde = "1.0.219"
-toml = "0.8.20"
+[workspace.package]
+name = "dodo"
+version = "0.1.0"
+edition = "2024"
+
+[workspace.dependencies]
+# Core crates
 dodo-ai = { path = "crates/dodo-ai" }
 dodo-classifier = { path = "crates/dodo-classifier" }
 dodo-filetype = { path = "crates/dodo-filetype" }
 dodo-parsers = { path = "crates/dodo-parsers" }
 dodo-cache = { path = "crates/dodo-cache" }
-dodo-cli = { path = "crates/dodo-cli" }
 dodo-core = { path = "crates/dodo-core" }
+dodo-cli = { path = "crates/dodo-cli" }
+
+# External dependencies
+serde = { version = "1.0.219", features = ["derive"] }
+toml = "0.8.20"
+clap = { version = "4.5.35", features = ["derive"] }
+
+# Optional: add other shared libraries here
+# log = "0.4"
+# anyhow = "1.0"
