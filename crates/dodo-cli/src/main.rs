@@ -11,5 +11,5 @@ fn main() {
         Command::Init => commands::init::handle(),
         Command::Build => commands::build::handle(),
         Command::Add { integration } => commands::add::handle(&integration),
-    }
+    };
 }

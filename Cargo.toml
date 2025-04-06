@@ -26,9 +26,10 @@ dodo-core = { path = "crates/dodo-core" }
 dodo-cli = { path = "crates/dodo-cli" }
 
 # External dependencies
+anyhow = "1.0.97"
+clap = { version = "4.5.35", features = ["derive"] }
 serde = { version = "1.0.219", features = ["derive"] }
 toml = "0.8.20"
-clap = { version = "4.5.35", features = ["derive"] }
 
 # Optional: add other shared libraries here
 # log = "0.4"

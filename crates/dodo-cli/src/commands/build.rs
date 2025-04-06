@@ -1,3 +1,6 @@
-pub fn handle() {
-    println!("Running dodo build...");
+use anyhow::Result;
+
+pub fn handle() -> Result<()> {
+    // ...
+    Ok(())
 }
