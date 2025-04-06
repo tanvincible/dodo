@@ -1,20 +1,21 @@
 pub fn handle() -> anyhow::Result<()> {
     println!("Running dodo init...");
-    println!("Are your test directories named `tests/`? (y/n)");
+    println!("Are your test directories named `tests/`? (Y/n) [default: Y]");
 
     let mut answer = String::new();
     std::io::stdin().read_line(&mut answer)?;
+    let answer = answer.trim().to_lowercase();
 
-    let test_dirs = if answer.trim().to_lowercase() == "y" {
+    let test_dirs = if answer.is_empty() || answer == "y" {
         vec!["tests".into()]
     } else {
-        println!("Enter test directories (comma-separated):");
-        let mut custom = String::new();
-        std::io::stdin().read_line(&mut custom)?;
-        custom
-            .split(',')
-            .map(|s| s.trim().to_string())
-            .filter(|s| !s.is_empty())
+        println!("Enter test directories (space-separated):");
+        let mut input = String::new();
+        std::io::stdin().read_line(&mut input)?;
+
+        input
+            .split_whitespace()
+            .map(|s| s.to_string())
             .collect::<Vec<_>>()
     };
 
