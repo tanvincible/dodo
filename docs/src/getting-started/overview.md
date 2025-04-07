@@ -9,16 +9,28 @@ Here’s a high-level view of each component and how they interact:
 - **Purpose:**  
   Dodo is the command-line interface that developers interact with. Its primary functions include initializing project configurations, generating CI/CD workflows, and managing updates.  
 
-- See [commands](commands.markdown) for key commands and configs. 
+- See [commands](../configuration/commands.markdown) and [configs](../configuration/config.markdown) for additional information. 
 
 ## 2. **raphus.io Registry**
+
 - **Purpose:**  
-  raphus.io is the centralized, community-driven registry for CI/CD workflow templates. Think of it as a “marketplace” for workflow templates, much like crates.io is for Rust packages.
+  `raphus.io` is the centralized, community-driven registry for CI/CD workflow templates, plugins, and AI extensions. Think of it as a “marketplace” for composable automation logic—similar to how `crates.io` serves Rust packages.
+
 - **Structure:**  
-  - **Internal Templates:** Pre-vetted, curated workflows for major languages (e.g., Rust, Python, Go, Node.js) that are maintained by Dodomatic’s core team.
-  - **Metadata Index:** A global index (e.g., `template.json`) that maps languages to their respective templates, including versioning information, tags, and descriptions.
+  - **Internal Templates:** Pre-vetted, high-quality workflow templates for major languages (e.g., Rust, Python, Go, Node.js), maintained by the core Dodomatic team.
+  - **Plugin System:** Raphus.io will support a wide range of plugins—not just workflow templates, but also integrations for alternative CI/CD tools, locally hosted AI models, and even custom template transformers.
+  - **raphus.io-index:**  
+    A dedicated repository (`raphus.io-index`) acts as the authoritative index for all templates and plugins. It contains version information, metadata, descriptions, and compatibility tags.
+  
 - **Future Vision:**  
-  As the ecosystem grows, raphus.io will support advanced features like robust search, versioning, and community publishing (initially gated to ensure quality).
+  As the ecosystem matures, `raphus.io` will evolve into a full plugin platform. Key features include:
+  - Fine-grained search and filtering
+  - Version pinning and upgrade paths
+  - Quality-gated community contributions
+  - Support for AI plugin discovery and updates
+  - Toolchain-specific extensions (e.g., Bazel, Nix, custom GitLab runners)
+
+`raphus.io` ensures that Dodo can stay modular, adaptable, and open to a wide range of automation setups—from basic GitHub Actions to advanced, custom pipelines and local model integrations.
 
 ## 3. **Test Repositories (dodo-tests & raphus-tests)**
 - **Purpose:**  
@@ -42,7 +54,7 @@ Here’s a high-level view of each component and how they interact:
 - **Initialization:**  
   A developer starts by running `dodo init` in their project, which auto-generates a configuration file (`dodo.toml`) based on the detected project structure.
 - **Workflow Generation:**  
-  When `dodo build` is executed, Dodo pulls the base workflow template from raphus.io, adapts it to the project-specific details (e.g., selecting the right test, lint, build, and deploy commands), and writes the final workflow to the repository.
+  When `dodo build` is executed, Dodo pulls the base workflow template from `raphus.io`, adapts it to the project-specific details (e.g., selecting the right test, lint, build, and deploy commands), and writes the final workflow to the repository's `.github/workflows/` folder.
 - **Continuous Updates:**  
   `dodo update` periodically checks for newer versions of the actions used within the workflow, ensuring that the CI/CD process stays current.
 - **External Contributions:**  
@@ -60,7 +72,9 @@ Here’s a high-level view of each component and how they interact:
 
 ## Conclusion
 
-From a developer’s point of view, Dodomatic’s architecture is built to automate and simplify the often tedious process of managing CI/CD workflows. The integration of Dodo, raphus.io, automated testing repositories, and an intelligent bot (Dox) ensures that workflows are not only generated dynamically but are also kept up-to-date and thoroughly validated. 
+From a developer’s point of view, Kurajo's architecture is built to automate and simplify the often tedious process of managing CI/CD workflows. The integration of Dodo, raphus.io, automated testing repositories, and an intelligent bot (Dox) ensures that workflows are not only generated dynamically but are also kept up-to-date and thoroughly validated. 
 This modular, scalable design sets the stage for long-term growth, community involvement, and a robust, open-source ecosystem that will empower developers for years to come.
 
-Feel free to dive into each component’s documentation for more detailed insights. Happy coding!
+Feel free to dive into each component’s documentation for more detailed insights. 
+
+Happy coding!

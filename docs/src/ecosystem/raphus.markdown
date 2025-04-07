@@ -114,13 +114,13 @@ This documentation covers the current architecture, integration flow with Dodo, 
 
 We welcome contributions to raphus.io!
 
-1. **Fork** the repository
+1. **Fork** the repository.
 2. **Add your template/plugin**
-   - Follow template guidelines in `TEMPLATE_GUIDELINES.md`
-   - Follow plugin interface in `PLUGIN_GUIDELINES.md`
-3. **Submit a Pull Request**
+   - Follow template guidelines in `TEMPLATE_GUIDELINES.md`.
+   - Follow plugin interface in `PLUGIN_GUIDELINES.md`.
+3. **Submit a Pull Request**.
    - Include metadata (version, language tags, etc.)
-   - Add a test project if possible
+   - Add a test project if possible.
 
 ---
 
@@ -129,12 +129,12 @@ We welcome contributions to raphus.io!
 **raphus.io** is licensed under the [Elastic License 2.0 (ELv2)](https://www.elastic.co/licensing/elastic-license).
 
 You **may**:
-- Use, modify, and distribute the source freely for personal or internal use
+- Use, modify, and distribute the source freely for personal or internal use.
 
 You **may not**:
-- Host raphus.io as a service or provide managed access to it
-- Remove or obscure copyright
-- Circumvent license enforcement, if any
+- Host raphus.io as a service or provide managed access to it.
+- Remove or obscure copyright.
+- Circumvent license enforcement, if any.
 
 For more details, read the full [Elastic License 2.0](https://www.elastic.co/licensing/elastic-license).
 
