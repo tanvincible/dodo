@@ -1,5 +1,5 @@
 use crate::engine::{FiletypeEngine, FiletypeResult};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 pub struct MagikaEngine;
 

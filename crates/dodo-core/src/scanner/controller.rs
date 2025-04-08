@@ -4,6 +4,8 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use ignore::WalkBuilder;
 use std::io::BufRead;
+use dodo_ai::{AiEngine, Phi3MiniEngine};
+use anyhow::Result;
 
 /// Main entry point: scan project, run Magika per file, send results to AI
 pub fn scan_with_magika(test_dirs: &[String]) -> anyhow::Result<()> {
@@ -25,11 +27,11 @@ pub fn scan_with_magika(test_dirs: &[String]) -> anyhow::Result<()> {
         .map(|entry| entry.into_path())
         .collect();
 
-    files_to_process.par_iter().for_each(|path| {
-        if let Err(err) = process_file(path) {
-            eprintln!("Error processing {}: {}", path.display(), err);
-        }
-    });
+        for path in &files_to_process {
+            if let Err(err) = process_file(path) {
+                eprintln!("Error processing {}: {}", path.display(), err);
+            }
+        };        
 
     Ok(())
 }
@@ -58,7 +60,11 @@ fn process_file(path: &Path) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn send_to_ai(path: &Path, magika_output: &str) -> anyhow::Result<()> {
+pub fn send_to_ai(path: &Path, magika_output: &str) -> Result<()> {
     println!("Sending to AI:\n{}", magika_output);
+
+    let engine = Phi3MiniEngine::new()?;
+    engine.process_file_with_magika(path, magika_output)?;
+
     Ok(())
 }

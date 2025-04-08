@@ -9,3 +9,4 @@ ignore = { workspace = true }
 magika = { workspace = true }
 rayon = { workspace = true }
 walkdir = "2.5.0"
+dodo-ai = { path = "../dodo-ai" }
