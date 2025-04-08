@@ -28,9 +28,8 @@ dodo-cli = { path = "crates/dodo-cli" }
 # External dependencies
 anyhow = "1.0.97"
 clap = { version = "4.5.35", features = ["derive"] }
+ignore = "0.4.23"
+magika = "0.1.1"
+rayon = "1.10.0"
 serde = { version = "1.0.219", features = ["derive"] }
 toml = "0.8.20"
-
-# Optional: add other shared libraries here
-# log = "0.4"
-# anyhow = "1.0"

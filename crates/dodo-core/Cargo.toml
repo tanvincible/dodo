@@ -5,3 +5,7 @@ edition = "2024"
 
 [dependencies]
 anyhow = { workspace = true }
+ignore = { workspace = true }
+magika = { workspace = true }
+rayon = { workspace = true }
+walkdir = "2.5.0"
