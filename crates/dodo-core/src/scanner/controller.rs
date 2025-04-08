@@ -1,9 +1,7 @@
 use crate::scanner::ignore::build_ignore_matcher;
-use rayon::prelude::*;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use ignore::WalkBuilder;
-use std::io::BufRead;
 use dodo_ai::{AiEngine, Phi3MiniEngine};
 use anyhow::Result;
 

@@ -1,6 +1,5 @@
 use anyhow::Result;
-use ignore::{WalkBuilder, gitignore::{Gitignore, GitignoreBuilder}};
-use std::path::{Path, PathBuf};
+use ignore::gitignore::{Gitignore, GitignoreBuilder};
 
 /// Builds a Gitignore matcher that includes:
 /// - All nested `.gitignore` files automatically
