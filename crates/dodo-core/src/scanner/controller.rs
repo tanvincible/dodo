@@ -10,8 +10,8 @@ pub fn scan_with_magika(test_dirs: &[String]) -> anyhow::Result<()> {
     let ignore_matcher = build_ignore_matcher(test_dirs)?;
 
     let walker = WalkBuilder::new(".")
-        .hidden(false) // we check hidden manually
-        .standard_filters(true) // enables .gitignore, .ignore, etc.
+        .hidden(false)
+        .standard_filters(true)
         .build();
 
     let files_to_process: Vec<PathBuf> = walker
@@ -53,13 +53,12 @@ fn process_file(path: &Path) -> anyhow::Result<()> {
     }
 
     let stdout = String::from_utf8_lossy(&output.stdout);
-    println!("Magika output for {}:\n{}", path.display(), stdout);
     send_to_ai(path, &stdout)?;
 
     Ok(())
 }
 
 fn send_to_ai(path: &Path, magika_output: &str) -> anyhow::Result<()> {
-    println!("Sending to AI: {}\n{}", path.display(), magika_output);
+    println!("Sending to AI:\n{}", magika_output);
     Ok(())
 }
