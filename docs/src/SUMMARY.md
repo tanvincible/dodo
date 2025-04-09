@@ -18,6 +18,7 @@
 # Internals  
 - [AI Integration](internals/ai.markdown)  
 - [How Dodo Works?](internals/how-dodo-works.markdown)  
+- [Generation of `dodo.toml`](internals/pipeline.markdown)
 
 # Additional Resources  
 - [Troubleshooting](troubleshooting.markdown)  
