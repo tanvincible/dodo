@@ -1,9 +1,9 @@
 use crate::scanner::ignore::build_ignore_matcher;
+use anyhow::Result;
+use dodo_ai::{AiEngine, Phi3MiniEngine};
+use ignore::WalkBuilder;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
-use ignore::WalkBuilder;
-use dodo_ai::{AiEngine, Phi3MiniEngine};
-use anyhow::Result;
 
 /// Main entry point: scan project, run Magika per file, send results to AI
 pub fn scan_with_magika(test_dirs: &[String]) -> anyhow::Result<()> {
@@ -18,18 +18,16 @@ pub fn scan_with_magika(test_dirs: &[String]) -> anyhow::Result<()> {
         .filter_map(|entry| entry.ok())
         .filter(|entry| {
             let path = entry.path();
-            path.is_file()
-                && !is_hidden(path)
-                && !ignore_matcher.matched(path, false).is_ignore()
+            path.is_file() && !is_hidden(path) && !ignore_matcher.matched(path, false).is_ignore()
         })
         .map(|entry| entry.into_path())
         .collect();
 
-        for path in &files_to_process {
-            if let Err(err) = process_file(path) {
-                eprintln!("Error processing {}: {}", path.display(), err);
-            }
-        };        
+    for path in &files_to_process {
+        if let Err(err) = process_file(path) {
+            eprintln!("Error processing {}: {}", path.display(), err);
+        }
+    }
 
     Ok(())
 }

@@ -20,7 +20,10 @@ impl FiletypeEngine for MagikaEngine {
 
         Ok(FiletypeResult {
             file_path: file_path.to_path_buf(),
-            mime: parsed["predicted_mime"].as_str().unwrap_or("unknown").to_string(),
+            mime: parsed["predicted_mime"]
+                .as_str()
+                .unwrap_or("unknown")
+                .to_string(),
             confidence: parsed["confidence"].as_f64().unwrap_or(0.0) as f32,
             source: "Magika".to_string(),
         })
