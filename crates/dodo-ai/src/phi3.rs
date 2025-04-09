@@ -1,13 +1,15 @@
 use std::io::{BufRead, Write};
 use std::path::Path;
 
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
+use serde_json::{Value, json};
 use ureq;
-use serde_json::{json, Value};
 
 use crate::AiEngine;
 
 pub struct Phi3MiniEngine;
+
+const PHI3_SAFE_BYTE_LIMIT: usize = 256 * 1024; // 256 KB safe truncation
 
 impl Phi3MiniEngine {
     pub fn new() -> Result<Self> {
@@ -15,79 +17,138 @@ impl Phi3MiniEngine {
 
         match res {
             Ok(_) => Ok(Self),
-            Err(ureq::Error::Http(status)) => {
-                Err(anyhow!("Phi-3 Mini server returned status code: {}", status))
-            }
-            Err(e) => Err(anyhow!("Failed to connect to Phi-3 Mini at localhost:11434: {e}")),
+            Err(ureq::Error::Http(status)) => Err(anyhow!(
+                "Phi-3 Mini server returned status code: {}",
+                status
+            )),
+            Err(e) => Err(anyhow!(
+                "Failed to connect to Phi-3 Mini at localhost:11434: {e}"
+            )),
         }
     }
 }
 
+fn read_and_truncate_file(path: &Path, byte_limit: usize) -> Result<String> {
+    let bytes = std::fs::read(path)?;
+    let truncated = if bytes.len() > byte_limit {
+        let cut = &bytes[..byte_limit];
+        match std::str::from_utf8(cut) {
+            Ok(s) => s.to_string(),
+            Err(e) => {
+                let valid = &cut[..e.valid_up_to()];
+                String::from_utf8_lossy(valid).to_string()
+            }
+        }
+    } else {
+        String::from_utf8_lossy(&bytes).to_string()
+    };
+    Ok(truncated)
+}
+
 impl AiEngine for Phi3MiniEngine {
     fn process_file_with_magika(&self, path: &Path, magika_output: &str) -> Result<()> {
+        let content = read_and_truncate_file(path, PHI3_SAFE_BYTE_LIMIT)?;
+
         let prompt = format!(
             r#"
-        You are an AI embedded in a CI configuration analysis tool.
-        
-        ## INPUT:
-        You will be given:
-        - A file path
-        - Its content type (from Magika)
-        
-        ## OBJECTIVE:
-        Analyze the file and output strict JSON based on the following:
-        
-        ---
-        
-        ### STEP 1 — Is it a config file?
-        - If NO, respond exactly with:
-          {{ "is_config": false }}
-        
-        ---
-        
-        ### STEP 2 — If YES, check if it's CI-related:
-        - Only extract metadata for CI-related config files.
-        - CI-related = used for build, lint, test, or deploy in CI.
-        
-        Use these known mappings:
-        - **build**: Cargo.toml, package.json, pom.xml, Makefile, CMakeLists.txt
-        - **lint**: .eslintrc.*, .stylelintrc.*, flake8, pylint, etc.
-        - **test**: pytest.ini, tox.ini, tests/*.py, jest.config.*, etc.
-        - **deploy**: Dockerfile, vercel.json, deploy.yml, Netlify config, etc.
-        
-        ---
-        
-        ### STEP 3 — Output ONLY this strict JSON if CI-related:
-        
-        {{
-          "is_config": true,
-          "ci_phase": "<build|lint|test|deploy|unknown>",
-          "tool": "<tool name or unknown>",
-          "version": "<version or unknown>",
-          "dependencies": [ "<dep1>", "<dep2>", ... ],
-          "targets": [ "<glob or path>" ],
-          "environment": "<e.g. nodejs, rust, python, etc.>"
-        }}
-        
-        ---
-        
-        ### RULES (MANDATORY):
-        - JSON only — no text, markdown, or comments
-        - Always valid JSON
-        - If values are missing, use "unknown"
-        - Dependencies and targets must always be arrays
-        - Do NOT extract metadata if the config is not CI-related
-        
-        ### FILE PATH:
-        {}
-        
-        ### MAGIKA TYPE:
-        {}
-        "#,
-            path.display(),
-            magika_output.trim()
-        );        
-        
+Your job is to analyze configuration-related files and extract structured metadata.
+
+---
+
+## INPUT
+You will be given:
+- A file path (string)
+- A Magika-generated file type (string)
+- The file content (truncated text, always under 100KB)
+
+---
+
+## OBJECTIVE
+Step-by-step behavior:
+
+STEP 1 — Is it a configuration file?
+- If NO, return only:
+{{ "is_config": false }}
+- If YES, continue to step 2.
+
+STEP 2 — Is it CI-related?
+- If NO, return:
+{{ "is_config": true, "ci_phase": "unknown" }}
+- If YES, continue to step 3.
+
+STEP 3 — Extract the following STRICT JSON:
+{{ 
+  "is_config": true,
+  "ci_phase": "<build|lint|test|deploy|unknown>",
+  "tool": "<tool name or unknown>",
+  "version": "<version or unknown>",
+  "dependencies": ["<dep1>", "<dep2>", ...],
+  "targets": ["<glob or file path>", ...],
+  "environment": "<nodejs|rust|python|unknown>"
+}}
+
+---
+
+## MANDATORY RULES
+- Only emit valid JSON — no prose, explanations, markdown, or comments.
+- Keys must appear in the exact order.
+- If a field is unknown or not extractable, use "unknown" or an empty array ([]).
+- `dependencies` and `targets` must always be arrays.
+- Never hallucinate tools or environments.
+- Use "ci_phase": "unknown" if unsure.
+
+---
+
+## MAPPINGS
+Known CI-related file paths or type hints:
+- Build: Cargo.toml, package.json, Makefile, CMakeLists.txt, pom.xml, etc.
+- Lint: .eslintrc.*, .stylelintrc.*, .flake8, pylintrc, pyproject.toml (with lint section), etc.
+- Test: pytest.ini, tox.ini, jest.config.*, tests/*, etc.
+- Deploy: Dockerfile, vercel.json, netlify.toml, *.deploy.yml, etc.
+
+---
+
+## EXAMPLE INPUT
+File path: .github/workflows/build.yml  
+File type: YAML data  
+File content:  
+name: CI  
+on: [push]  
+jobs:  
+  build:  
+    runs-on: ubuntu-latest  
+    steps:  
+      - uses: actions/checkout@v2  
+      - name: Build  
+        run: cargo build --release  
+
+---
+
+## EXPECTED OUTPUT
+{{ 
+  "is_config": true,
+  "ci_phase": "build",
+  "tool": "cargo",
+  "version": "unknown",
+  "dependencies": [],
+  "targets": [".github/workflows/build.yml"],
+  "environment": "rust"
+}}
+
+### FILE PATH:
+{filepath}
+
+### MAGIKA TYPE:
+{filetype}
+
+### TRUNCATED FILE CONTENT:
+{filecontent}
+"#,
+            filepath = path.display(),
+            filetype = magika_output.trim(),
+            filecontent = content,
+        );
+
         let response = ureq::post("http://localhost:11434/api/generate")
             .header("Content-Type", "application/json")
             .send_json(json!({
@@ -104,17 +165,16 @@ impl AiEngine for Phi3MiniEngine {
         let mut stdout = std::io::stdout();
         for line in std::io::BufReader::new(reader).lines() {
             let line = line.map_err(|e| anyhow!("Stream read error: {}", e))?;
-            
+
             if line.trim().is_empty() {
                 continue;
             }
 
             let json: Value = serde_json::from_str(&line)
                 .map_err(|e| anyhow!("JSON parse error: {} in line: {}", e, line))?;
-            
+
             if let Some(chunk) = json.get("response").and_then(|v| v.as_str()) {
-                write!(stdout, "{}", chunk)
-                    .map_err(|e| anyhow!("Output write error: {}", e))?;
+                write!(stdout, "{}", chunk).map_err(|e| anyhow!("Output write error: {}", e))?;
                 stdout.flush()?;
             }
         }
