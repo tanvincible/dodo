@@ -100,6 +100,14 @@ STEP 3 — Extract the following STRICT JSON format:
 
 ---
 
+## GUARD CLAUSE — DO NOT PROCESS SOURCE CODE FILES
+- If `Magika` reports the file type as a programming language source code file (e.g., "Rust source", "Python source", "JavaScript source"), it is NOT a configuration file.
+- In that case, return exactly:
+  {{ "is_config": false }}
+- Do NOT analyze its contents. Do NOT proceed to STEP 2 or STEP 3.
+
+---
+
 ## MAPPINGS
 
 ### CI PHASES:
@@ -115,7 +123,7 @@ STEP 3 — Extract the following STRICT JSON format:
 ### ✅ Example 1: Rust Cargo.toml
 
 **MAGIKA TYPE:** Tom's Obvious, Minimal Language (TOML)  
-**CONTENT:**
+**TRUNCATED FILE CONTENT**
 ```
 [package]
 name = "my-rust-app"
@@ -143,7 +151,7 @@ edition = "2021"
 ### ✅ Example 2: Rust source code
 
 **MAGIKA TYPE:** Rust source (code)  
-**CONTENT:**
+**TRUNCATED FILE CONTENT**
 ```rust
 fn main() {{
     println!("Hello, world!");
@@ -160,7 +168,7 @@ fn main() {{
 ### ✅ Example 3: Dockerfile
 
 **MAGIKA TYPE:** YAML data  
-**CONTENT:**
+**TRUNCATED FILE CONTENT**
 ```
 FROM node:18
 RUN npm install
