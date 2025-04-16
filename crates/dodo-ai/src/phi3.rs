@@ -51,7 +51,7 @@ impl AiEngine for Phi3MiniEngine {
 
         let prompt = format!(
             r#"
-Your job is to analyze configuration-related files and extract structured metadata.
+Analyze configuration-related files and extract structured metadata.
 
 ---
 
@@ -67,17 +67,19 @@ You will be given:
 Step-by-step behavior:
 
 STEP 1 — Is it a configuration file?
-- If NO, return only:
-{{ "is_config": false }}
-- If YES, continue to step 2.
+- If Magika says the type is source code (e.g. "Rust source", "Python source", "JavaScript source", etc.), respond:
+  {{ "is_config": false }}
+  Then skip to the next input.
+- Otherwise, if it is a TOML, YAML, JSON, INI, or known CI-related format (see mappings), continue to STEP 2.
 
 STEP 2 — Is it CI-related?
-- If NO, return:
-{{ "is_config": true, "ci_phase": "unknown" }}
-- If YES, continue to step 3.
+- If NO CI phase can be confidently inferred (e.g., it's a general settings file), return:
+  {{ "is_config": true, "ci_phase": "unknown" }}
+  Then skip to the next input.
+- If YES, continue to STEP 3.
 
-STEP 3 — Extract the following STRICT JSON:
-{{ 
+STEP 3 — Extract the following STRICT JSON format:
+{{
   "is_config": true,
   "ci_phase": "<build|lint|test|deploy|unknown>",
   "tool": "<tool name or unknown>",
@@ -89,51 +91,95 @@ STEP 3 — Extract the following STRICT JSON:
 
 ---
 
-## MANDATORY RULES
-- Only emit valid JSON — no prose, explanations, markdown, or comments.
-- Keys must appear in the exact order.
+## RULES
+- Output must be strictly valid JSON — no prose, comments, or explanations.
+- Keys must appear in this exact order.
 - If a field is unknown or not extractable, use "unknown" or an empty array ([]).
-- `dependencies` and `targets` must always be arrays.
-- Never hallucinate tools or environments.
-- Use "ci_phase": "unknown" if unsure.
+- Do not guess or hallucinate tools, versions, environments, or dependencies.
+- If the file is not configuration-related (e.g. it’s just source code), always return: {{ "is_config": false }}
 
 ---
 
 ## MAPPINGS
-Known CI-related file paths or type hints:
-- Build: Cargo.toml, package.json, Makefile, CMakeLists.txt, pom.xml, etc.
-- Lint: .eslintrc.*, .stylelintrc.*, .flake8, pylintrc, pyproject.toml (with lint section), etc.
-- Test: pytest.ini, tox.ini, jest.config.*, tests/*, etc.
-- Deploy: Dockerfile, vercel.json, netlify.toml, *.deploy.yml, etc.
+
+### CI PHASES:
+- **Build**: Cargo.toml, package.json, Makefile, CMakeLists.txt, pom.xml, build.gradle, etc.
+- **Lint**: .eslintrc.*, .stylelintrc.*, .flake8, pylintrc, pyproject.toml (with lint config), etc.
+- **Test**: pytest.ini, tox.ini, jest.config.*, files inside tests/, etc.
+- **Deploy**: Dockerfile, vercel.json, netlify.toml, deploy.yml, *.deploy.yml, etc.
 
 ---
 
-## EXAMPLE INPUT
-File path: .github/workflows/build.yml  
-File type: YAML data  
-File content:  
-name: CI  
-on: [push]  
-jobs:  
-  build:  
-    runs-on: ubuntu-latest  
-    steps:  
-      - uses: actions/checkout@v2  
-      - name: Build  
-        run: cargo build --release  
+## EXAMPLES
 
----
+### ✅ Example 1: Rust Cargo.toml
 
-## EXPECTED OUTPUT
-{{ 
+**MAGIKA TYPE:** Tom's Obvious, Minimal Language (TOML)  
+**CONTENT:**
+```
+[package]
+name = "my-rust-app"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+```
+
+**EXPECTED OUTPUT:**
+```json
+{{
   "is_config": true,
   "ci_phase": "build",
   "tool": "cargo",
-  "version": "unknown",
+  "version": "0.1.0",
   "dependencies": [],
   "targets": [".github/workflows/build.yml"],
   "environment": "rust"
 }}
+```
+
+---
+
+### ✅ Example 2: Rust source code
+
+**MAGIKA TYPE:** Rust source (code)  
+**CONTENT:**
+```rust
+fn main() {{
+    println!("Hello, world!");
+}}
+```
+
+**EXPECTED OUTPUT:**
+```json
+{{ "is_config": false }}
+```
+
+---
+
+### ✅ Example 3: Dockerfile
+
+**MAGIKA TYPE:** YAML data  
+**CONTENT:**
+```
+FROM node:18
+RUN npm install
+```
+
+**EXPECTED OUTPUT:**
+```json
+{{
+  "is_config": true,
+  "ci_phase": "deploy",
+  "tool": "unknown",
+  "version": "unknown",
+  "dependencies": [],
+  "targets": ["./Dockerfile"],
+  "environment": "nodejs"
+}}
+```
+
+---
 
 ### FILE PATH:
 {filepath}
@@ -143,6 +189,10 @@ jobs:
 
 ### TRUNCATED FILE CONTENT:
 {filecontent}
+
+## FINAL NOTE
+Respond **only** with the JSON block matching the logic above. Never explain your answer.
+
 "#,
             filepath = path.display(),
             filetype = magika_output.trim(),
