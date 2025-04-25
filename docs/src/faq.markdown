@@ -2,10 +2,6 @@
 
 ## raphus.io
 
-### Q: Is raphus.io cloud-based?
-
-**No.** All processing is done **locally**. Phi-3 Mini 128K is bundled with Dodo and used for inference on your machine.
-
 ### Q: How are templates selected?
 
 Templates are chosen using:

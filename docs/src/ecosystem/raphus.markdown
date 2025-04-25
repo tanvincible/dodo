@@ -1,6 +1,6 @@
 # raphus.io
 
-**raphus.io** is the official CI/CD workflow registry for Dodo. It provides a structured repository of standardized GitHub Actions workflow templates and plugins that enable Dodo to generate and manage CI/CD pipelines reliably, consistently, and locally — without relying on cloud AI.
+**raphus.io** is the official CI/CD workflow registry for Dodo. It provides a structured repository of standardized GitHub Actions workflow templates and plugins that enable Dodo to generate and manage CI/CD pipelines reliably, consistently, and intelligently (local or cloud AI, depending on what you need).
 
 This documentation covers the current architecture, integration flow with Dodo, usage recommendations, and contribution guidelines.
 
@@ -24,10 +24,8 @@ This documentation covers the current architecture, integration flow with Dodo, 
 ### Key Features
 
 - **Registry for Templates & Plugins:** Hosts reusable, customizable workflow templates and plugins.
-- **Local AI Parsing:** Leverages **Phi-3 Mini 128K**, running locally, to extract context-aware details from project environments.
 - **Template System:** Maps languages and frameworks to predefined workflows using the [raphus.io-index](https://github.com/dodomatic/raphus.io-index).
 - **Plugin System:** Enables logic extension (e.g., environment setup, secrets handling) in a modular, reusable way.
-- **No Cloud Dependency:** All processing is performed locally; no external AI or cloud inference APIs are involved.
 
 ---
 

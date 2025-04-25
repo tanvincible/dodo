@@ -18,7 +18,7 @@ Here’s a high-level view of each component and how they interact:
 
 - **Structure:**  
   - **Internal Templates:** Pre-vetted, high-quality workflow templates for major languages (e.g., Rust, Python, Go, Node.js), maintained by the core Dodomatic team.
-  - **Plugin System:** Raphus.io will support a wide range of plugins—not just workflow templates, but also integrations for alternative CI/CD tools, locally hosted AI models, and even custom template transformers.
+  - **Plugin System:** Raphus.io will support a wide range of plugins—not just workflow templates, but also integrations for alternative CI/CD tools, locally and/or cloud hosted AI models, and even custom template transformers.
   - **raphus.io-index:**  
     A dedicated repository (`raphus.io-index`) acts as the authoritative index for all templates and plugins. It contains version information, metadata, descriptions, and compatibility tags.
   
@@ -30,7 +30,7 @@ Here’s a high-level view of each component and how they interact:
   - Support for AI plugin discovery and updates
   - Toolchain-specific extensions (e.g., Bazel, Nix, custom GitLab runners)
 
-`raphus.io` ensures that Dodo can stay modular, adaptable, and open to a wide range of automation setups—from basic GitHub Actions to advanced, custom pipelines and local model integrations.
+`raphus.io` ensures that Dodo can stay modular, adaptable, and open to a wide range of automation setups—from basic GitHub Actions to advanced, custom pipelines and local/cloud model integrations.
 
 ## 3. **Test Repositories (dodo-tests & raphus-tests)**
 - **Purpose:**  
