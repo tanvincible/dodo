@@ -5,11 +5,11 @@ Dodo is an AI-powered CI/CD automation tool that intelligently parses a projectâ
 
 ## Project Parsing
 1. **Full Project Scan:**
-   - Uses [Magika by Google](https://github.com/google/magika) to identify and classify files.
-   - Uses **Raphi** to determine whether a file is a configuration or an "interest" file (i.e., relevant to linting, testing, building, or deployment).
+   - Uses [Magika (by Google)](https://github.com/google/magika) to identify and classify files.
+   - Uses **local** or **cloud** to determine whether a file is a configuration or an "interest" file (i.e., relevant to linting, testing, building, or deployment).
 
 2. **Parsing Configuration Files:**
-   - Once files of interest are identified, Dodo uses **Lark** or another parsing tool to extract relevant tool configurations.
+   - Once files of interest are identified, Dodo parses the file and use **AI** to extract relevant tool configurations.
    - Extracts tool names, versions, dependencies, and settings from files like:
      - `pyproject.toml`, `setup.py`, `requirements.txt` (Python)
      - `Cargo.toml` (Rust)
