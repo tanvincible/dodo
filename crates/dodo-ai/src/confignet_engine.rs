@@ -7,8 +7,6 @@ pub struct ConfignetEngine {
     classifier: ConfigClassifier,
 }
 
-use std::fs;
-
 impl ConfignetEngine {
     pub fn new() -> Result<Self> {
         let csv_data = include_str!("../data/labeled/ci_cd.csv");

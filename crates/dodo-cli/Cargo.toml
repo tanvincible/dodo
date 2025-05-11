@@ -6,7 +6,6 @@ edition = "2024"
 [dependencies]
 anyhow = { workspace = true }
 clap = { workspace = true }
-dialoguer = "0.11.0"
 dodo-core = { workspace = true }
 
 [[bin]]

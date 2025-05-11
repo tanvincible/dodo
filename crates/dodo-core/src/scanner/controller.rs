@@ -37,6 +37,7 @@ fn is_hidden(path: &Path) -> bool {
         .unwrap_or(false)
 }
 
+// TODO: Decouple Magika later. Implement in dodo-filetype.
 fn process_file(path: &Path) -> anyhow::Result<()> {
     // Run Magika with JSON output
     let output = Command::new("magika")

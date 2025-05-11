@@ -5,8 +5,4 @@ edition = "2024"
 
 [dependencies]
 anyhow = { workspace = true }
-ignore = { workspace = true }
-magika = { workspace = true }
-serde = { workspace = true }
 serde_json = { workspace = true }
-confignet = { workspace = true }
