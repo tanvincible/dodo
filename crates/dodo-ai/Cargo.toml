@@ -7,3 +7,4 @@ edition = "2024"
 anyhow = { workspace = true }
 ureq = { version = "3.0.10", features = ["json"] }
 serde_json = { workspace = true }
+confignet = { workspace = true }
